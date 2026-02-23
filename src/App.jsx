@@ -1,9 +1,12 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { sendMessage } from "./api";
+import { v4 as uuidv4 } from "uuid";
 import logo from "./assets/mesa.png";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function generateSessionId() {
-  return crypto.randomUUID();
+  return uuidv4();
 }
 
 export default function App() {
@@ -87,11 +90,11 @@ export default function App() {
     let endpoint = "";
 
     if (currentFlow === "vpn") {
-      endpoint = "http://127.0.0.1:8000/vpn/upload";
+      endpoint = `${API_URL}/vpn/upload`;
     }
 
     if (currentFlow === "correo") {
-      endpoint = "http://127.0.0.1:8000/correo/upload";
+      endpoint = `${API_URL}/correo/upload`;
     }
 
     await fetch(endpoint, {
@@ -148,7 +151,7 @@ export default function App() {
                 }}
               >
                 {msg.type === "vpn_download" ||
-                  msg.type === "correo_download" ? (
+                msg.type === "correo_download" ? (
                   <>
                     <div>{msg.content}</div>
                     <a
