@@ -1,0 +1,15 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: callcenter-db
+    environment:
+      POSTGRES_DB: callcenter
+      POSTGRES_USER: callcenter
+      POSTGRES_PASSWORD: callcenter123
+    ports:
+     - "5433:5432"
+    volumes:
+      - callcenter_db:/var/lib/postgresql/data
+
+volumes:
+  callcenter_db:
